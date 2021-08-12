@@ -10,9 +10,6 @@ const price = document.getElementById("price");
 const select = document.getElementById("select");
 const lienPanier = document.getElementById("lienPanier");
 
-//Je crée une variable dans laquelle je mets les keys et les values du localStorage
-let productListPanier = JSON.parse(localStorage.getItem("registeredProduct"));
-
 
 //Affichage des informations du produit
 titleProduct.innerHTML = (myProduct.name);
@@ -26,13 +23,15 @@ for(let i in myProduct.lenses){
     select.appendChild(newOpt);
     newOpt.innerHTML= (myProduct.lenses[i]);
 }
+//Je crée une variable dans laquelle je mets les keys et les values du localStorage
+let productListPanier = JSON.parse(localStorage.getItem("registeredProduct"));
 
 //paramétrage du bouton "ajouter au panier"
 lienPanier.addEventListener("click", function(){
-    // S'il y a déjà des particles enregistrés dans le localStorage
+    // S'il y a déjà des articles enregistrés dans le localStorage
     if(productListPanier){
         productListPanier.push(myProduct);
-        localStorage.setItem("registeredProducts", "Globi");
+        localStorage.setItem("registeredProducts", JSON.stringify(productListPanier));
     }  
     // S'il n'y a pas encore d'articles enregistrés dans le localStorage 
     else {
