@@ -30,6 +30,8 @@ const newUl= document.createElement("ul");
 
 // Affichage des produits appareil photo
 fetch("http://localhost:3000/api/cameras")
+
+//transformation de la réponse de la requête en objet JSON et gestion erreur serveur
 .then(response => {
   if(response.ok){
     main.appendChild(newUl);
@@ -40,6 +42,8 @@ fetch("http://localhost:3000/api/cameras")
     console.log("erreur : " + response.status);
   }
 })
+
+//Affichage des produits dans une liste avec création des éléments d'affichage grace à une boucle. Stylage des éléments.
 .then(data => {
   for (let i in data){
     const newLi= document.createElement("li");
@@ -62,15 +66,14 @@ fetch("http://localhost:3000/api/cameras")
     newA.innerHTML= "voir";
     newA.setAttribute("href", "../../produit.html");
     newA.setAttribute("id", data[i].name);
+    newA.setAttribute("class", "btn btn-primary");
     newA.style.display= "inline-block";
     newA.style.textAlign= "center";
     newA.style.width = "50px";
-    newA.style.border = "1px solid black";
-    newA.style.cursor= "pointer";
       }
-      // paramétrage du bouton/lien "voir" avec localStorage du produit et lien vers la page "produit.html"
+      // paramétrage du bouton/lien "voir" avec localStorage du produit au clic et lien vers la page "produit.html"
       let buttonZurss = document.getElementById("Zurss 50S");
-      let dataZurss= JSON.stringify(data[0]);
+      let dataZurss= JSON.stringify(data[0]); // je convertis l'objet javascript en JSON pour pouvoir le stocker
       buttonZurss.addEventListener("click", function()
       {
         localStorage.setItem("product", dataZurss);
@@ -110,15 +113,9 @@ fetch("http://localhost:3000/api/cameras")
       }
       );
     })
-    //.catch : gère les erreurs au global dans la portée.
+    //.catch : gère les erreurs au global dans la portée du 2ème then
 .catch(function(err) {
   alert("une erreur est survenue")
 })
 
-// localstorage de l'objet au click sur bouton
-
-
-    /* A FAIRE
-    
-Utiliser les promesses (c’est un objet existant en JS qu’on utilise pour stocker des besoins) : il faut que je crée une classe et des promesses (pour éviter d’appeler l’api tout le temps, on va créer des promesses pour stocker des objets et ne pas avoir besoin de rappeler l’API. Je paramètre le temps de rafraichissement des promesses. Les API ont des limites en termes d’appel (5fois en 10 secondes). */
 

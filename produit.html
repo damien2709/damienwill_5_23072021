@@ -16,7 +16,7 @@
 <div class="container-fluid">
     <div class="row">
         <nav class="col navbar navbar-expand-lg bg-info navbar-light">
-            <a class="col-4 col-lg-2 navbar-brand" href="index.html"><img class="logo__img" src="assets/images/Logo_orinico.png" alt="Logo de la société de vente en ligne Orinico"></a>
+            <a class="col-4 col-lg-2 navbar-brand" href="./index.html"><img class="logo__img" src="assets/images/Logo_orinico.png" alt="Logo de la société de vente en ligne Orinico"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent">
                 <span class="navbar-toggler-icon"></span>
              </button>
@@ -26,7 +26,7 @@
                         <a class="nav-link" href="index.html">Accueil</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Panier</a>
+                        <a class="nav-link" href="panier.html">Panier</a>
                     </li>
                 </ul>
             </div>
@@ -39,18 +39,17 @@
  <main class="container-fluid" id="main">
      <h1 id="titleProduct"></h1>
      <img id="imgProduct" class="imgProduct" src="" alt="appareil photo Orinico">
+     <p class="h5">Description : </p>
      <p class="descript" id="descript"></p>
-    <FORM>
-        <p>Liste des options : </p>
-        <SELECT name="liste" size="1">
-            <OPTION>lundi
-            <OPTION>mardi
-            <OPTION>mercredi
-            <OPTION>jeudi
-            <OPTION>vendredi
-        </SELECT>
-    </FORM>
+    <form class="form">
+        <p class="h5">Choix des optiques : </p>
+        <select name="liste" size="1" id="select" class="form-control">
+           
+        </select>
+    </form>
+    <p class="h5">Prix :</p>
     <p class="price" id="price"></p>
+    <button id="lienPanier" class="btn btn-primary">Ajouter au panier</button>
     
     
     
