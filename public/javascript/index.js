@@ -43,30 +43,30 @@ fetch("http://localhost:3000/api/cameras")
 .then(data => {
   for (let i in data){
     const newLi= document.createElement("li");
-    newLi.setAttribute("class", "list-group-item");
     newUl.appendChild(newLi);
+    newLi.setAttribute("class", "list-group-item");
     const newImage= document.createElement("img");
+    newLi.appendChild(newImage);
     newImage.setAttribute("src", data[i].imageUrl);
     newImage.style.maxWidth="100px";
     newImage.style.marginRight="20px";
-    newLi.appendChild(newImage);
     const newH= document.createElement("h2");
+    newLi.appendChild(newH);
     newH.setAttribute("class", "list-group-item-action")
     newH.style.display = "inline-block";
     newH.style.width = "120px";
     newH.style.fontSize = "15px";
     newH.innerHTML= (data[i].name);
-    newLi.appendChild(newH);
     const newA= document.createElement("a");
+    newLi.appendChild(newA);
     newA.innerHTML= "voir";
-    newA.setAttribute("href", "produit.html");
+    newA.setAttribute("href", "../../produit.html");
     newA.setAttribute("id", data[i].name);
     newA.style.display= "inline-block";
     newA.style.textAlign= "center";
     newA.style.width = "50px";
     newA.style.border = "1px solid black";
     newA.style.cursor= "pointer";
-    newLi.appendChild(newA);
       }
       // paramétrage du bouton/lien "voir" avec localStorage du produit et lien vers la page "produit.html"
       let buttonZurss = document.getElementById("Zurss 50S");
