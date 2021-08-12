@@ -59,7 +59,7 @@ fetch("http://localhost:3000/api/cameras")
     newLi.appendChild(newH);
     const newA= document.createElement("a");
     newA.innerHTML= "voir";
-    newA.setAttribute("href", "produit.html");
+    newA.setAttribute("href", "../../produit.html");
     newA.setAttribute("id", data[i].name);
     newA.style.display= "inline-block";
     newA.style.textAlign= "center";
