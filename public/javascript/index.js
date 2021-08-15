@@ -1,121 +1,65 @@
+
 const main = document.getElementById("main");
 const newUl= document.createElement("ul");
 
-/* class cameralist {
-  constructor(name, url)
-  {
-      this.name = name;
-      this.url = url;
+// 1. AFFICHAGE DES ARTICLES DANS UNE LISTE 
 
-      affichageCameraList()
-      {
-          const newLi= document.createElement("li");
-          newLi.setAttribute("class", "list-group-item");
-          newUl.appendChild(newLi);
-          const newImage= document.createElement("img");
-          newLi.appendChild(newImage);
-          newImage.setAttribute("src", data[i].imageUrl);
-          newImage.style.maxWidth="100px";
-          newImage.style.marginRight="20px";
-          const newA= document.createElement("a");
-          newA.setAttribute("class", "list-group-item-action")
-          newA.setAttribute("href", "../../produit.html");
-          newA.setAttribute("id", data[i].name);
-          newLi.appendChild(newA);
-          newA.innerHTML= (data[i].name);
-      }
-
-  }
-}*/
-
-// Affichage des produits appareil photo
+  //1.1. communication avec l'API : requête GET
 fetch("http://localhost:3000/api/cameras")
 
-//transformation de la réponse de la requête en objet JSON et gestion erreur serveur
+  //1.2. transformation de la réponse (objet de type "response" de l'API fetch) de la requête en objet JSON (grace àla méthode de l'objet response : "json") et gestion erreur serveur (ok est une propriété de l'objet response : si requête entre 200 et 299 = true). La réponse créant l'bjet JSON est une promesse, on utilise donc les 2 méthodes "then" et "catch" pour ajouter des fonctions en cas de résolution ou d'échec de la promesse.
 .then(response => {
   if(response.ok){
-    main.appendChild(newUl);
-    newUl.setAttribute("class", "list-group") 
-    return response.json()  
+    return response.json()
 }
   else {
+    // "status" est une propriété de l'objet response et renvoie la valeur de la requête
     console.log("erreur : " + response.status);
   }
 })
 
-//Affichage des produits dans une liste avec création des éléments d'affichage grace à une boucle. Stylage des éléments.
+    //1.1.3 Exploitation de l'objet JSON retourné (avec fonction fléchée) pour Affichage des produits dans une liste avec création des éléments d'affichage grace à une boucle. Stylage des éléments. L'objet "data" n'existe que dans cette portée. 
 .then(data => {
+    main.appendChild(newUl);
+    newUl.setAttribute("class", "list-group")
   for (let i in data){
-    const newLi= document.createElement("li");
-    newUl.appendChild(newLi);
-    newLi.setAttribute("class", "list-group-item");
-    const newImage= document.createElement("img");
-    newLi.appendChild(newImage);
-    newImage.setAttribute("src", data[i].imageUrl);
-    newImage.style.maxWidth="100px";
-    newImage.style.marginRight="20px";
-    const newH= document.createElement("h2");
-    newLi.appendChild(newH);
-    newH.setAttribute("class", "list-group-item-action")
-    newH.style.display = "inline-block";
-    newH.style.width = "120px";
-    newH.style.fontSize = "15px";
-    newH.innerHTML= (data[i].name);
-    const newA= document.createElement("a");
-    newLi.appendChild(newA);
-    newA.innerHTML= "voir";
-    newA.setAttribute("href", "../../produit.html");
-    newA.setAttribute("id", data[i].name);
-    newA.setAttribute("class", "btn btn-primary");
-    newA.style.display= "inline-block";
-    newA.style.textAlign= "center";
-    newA.style.width = "50px";
-      }
-      // paramétrage du bouton/lien "voir" avec localStorage du produit au clic et lien vers la page "produit.html"
-      let buttonZurss = document.getElementById("Zurss 50S");
-      let dataZurss= JSON.stringify(data[0]); // je convertis l'objet javascript en JSON pour pouvoir le stocker
-      buttonZurss.addEventListener("click", function()
-      {
-        localStorage.setItem("product", dataZurss);
+    newUl.innerHTML += `
+            <li class="list-group-item">
+                <img src="${data[i].imageUrl}" style="
+                    max-width: 100px;
+                    margin-right= 20px;">
+                <h2 class="list-group-item-action" style="
+                    display: inline-block;
+                    width: 120px;
+                    font-size: 15px;"
+                    >${data[i].name}</h2>
+                <a href="produit.html" id="${data[i].name}" class="btn btn-primary" style="
+                    display: inline-block;
+                    text-align: center;
+                    width: 50px;">Voir</a>
+            </li>
+        `
+  }
+    //1.4. paramétrage des boutons/liens "voir" avec localStorage du produit au clic 
 
-      }
-      );
-      let buttonHirsch = document.getElementById("Hirsch 400DTS");
-      let dataHirsch= JSON.stringify(data[1]);
-      buttonHirsch.addEventListener("click", function()
-      {
-        localStorage.setItem("product", dataHirsch);
+    for (let i in data){
+    let button = document.getElementById(data[i].name);
+    // je convertis l'objet javascript en JSON pour pouvoir le stocker et je l'envoie dans le localStorage au clic
+    button.addEventListener("click", function()
+    {
+      localStorage.setItem("product", JSON.stringify(data[i]));
 
-      }
-      );
-      let buttonFranck = document.getElementById("Franck JS 105");
-      let dataFranck= JSON.stringify(data[2]);
-      buttonFranck.addEventListener("click", function()
-      {
-        localStorage.setItem("product", dataFranck);
-
-      }
-      );
-      let buttonKuros = document.getElementById("Kuros TTS");
-      let dataKuros= JSON.stringify(data[3]);
-      buttonKuros.addEventListener("click", function()
-      {
-        localStorage.setItem("product", dataKuros);
-
-      }
-      );
-      let buttonKatatone = document.getElementById("Katatone");
-      let dataKatatone= JSON.stringify(data[4]);
-      buttonKatatone.addEventListener("click", function()
-      {
-        localStorage.setItem("product", dataKatatone);
-
-      }
-      );
-    })
-    //.catch : gère les erreurs au global dans la portée du 2ème then
+    }
+    )};
+    
+})
+ //.catch : gère les erreurs au global dans la portée du 2ème then
 .catch(function(err) {
   alert("une erreur est survenue")
-})
+});
+
+
+
+
 
 

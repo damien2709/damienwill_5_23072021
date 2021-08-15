@@ -1,44 +1,34 @@
 // Je traduit l'objet JSON du localStorage en javascript
-let ProductsPanier= JSON.parse(localStorage.getItem("registeredProducts"));
+let productsPanier= JSON.parse(localStorage.getItem("registeredProducts"));
+
+const produitsPanier = document.getElementById("produitsPanier");
+let priceAdjust = (productsPanier[0].price/1000).toFixed(2);
+let quantite = productsPanier[2];
+function coutTotal(a,b){
+    return a*b;
+}
+let result = coutTotal(priceAdjust, quantite).toFixed(2);
+
 
 //création des éléments de la page 
-for(let i in ProductsPanier){
-const newDivRow= document.createElement("div");
-    main.appendChild(newDivRow);
-    newDivRow.setAttribute("class", "row");
-    newDivRow.style.border = ("1px solid black");
-    newDivRow.style.margin = ("10px");
-    newDivRow.style.padding = ("10px 0");
 
-    // Création de la col 1 avec image et nom de l'article
-const newDivCol1= document.createElement("div");
-    newDivRow.appendChild(newDivCol1);
-    newDivCol1.setAttribute("class", "col");
-    const newDivColImg= document.createElement("div");
-        newDivCol1.appendChild(newDivColImg);
-        newDivColImg.setAttribute("class", "col");
-    const newImg= document.createElement("img");
-        newDivColImg.appendChild(newImg);
-        newImg.setAttribute("class", "imgProduct");
-        newImg.setAttribute("src", ProductsPanier[i].imageUrl);
-    const newDivColName= document.createElement("div");
-        newDivCol1.appendChild(newDivColName);
-        newDivColName.setAttribute("class", "col");
-
-    //Création de la col 2 avec le prix et l'option choisie
-const newDivCol2= document.createElement("div");
-    newDivRow.appendChild(newDivCol2);
-    newDivCol2.setAttribute("class", "col");
-    const newDivColPrice= document.createElement("div");
-        newDivCol2.appendChild(newDivColPrice);
-        newDivColPrice.setAttribute("class", "col");
-    const newDivColOption= document.createElement("div");
-        newDivCol2.appendChild(newDivColOption);
-        newDivColOption.setAttribute("class", "col");
-
-//Affichage des informations des articles du panier
-newDivColName.innerHTML = (ProductsPanier[i].name);
-newDivColPrice.innerHTML = "Prix : " + (ProductsPanier[i].price) + " euros TTC";
-newDivColOption.innerHTML = "Option choisie : " + (ProductsPanier[i].option) ;
-
-}
+produitsPanier.innerHTML += `
+    <div class="row" style="border: 1px solid black; margin: 10px; padding: 10px 0">
+        <div class="col">
+            <div class="col">
+                <img src="${productsPanier[0].imageUrl}" alt="" class="imgProduct">
+            </div>
+            <div class="col">${productsPanier[0].name}</div>
+        </div>
+        <div class="col">
+            <div class="col"><p>Prix : ${priceAdjust} euros TTC</p></div>
+            <div class="col"><p>Option choisie : ${productsPanier[1]}</p></div>
+            <div class="col">Quantité : ${quantite}</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            Coût total : ${result} euros TTC
+        </div>
+    </div>
+    `
