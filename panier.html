@@ -43,14 +43,25 @@
          </div>
         
      </div>
-     <div class="form-group">
+     <form class="form-group" id="form" action="" novalidate> <!-- novalidate permet d'empecher le navigateur de valider les champs du formulaire. On peut le faire avec JS. l'attribut "action" indique l'adresse de la page du serveur à qui renvoyer le formulaire-->
+         <p class="h3">Formulaire de commande</p>
          <label for="prenom"></label>
-         <input type="text" class="form-control" id="prenom" placeholder="Prénom">
+         <input type="text" class="form-control" id="prenom" name="firstName" placeholder="Prénom" required>
+         <p class="error" id="errorPrenom"></p>
          <label for="nom"></label>
-         <input type="text" class="form-control" id="nom" placeholder="Nom">
+         <input type="text" class="form-control" id="nom" name="lastName" placeholder="Nom" required>
+         <p class="error" id="errorNom"></p>
+         <label for="address"></label>
+         <input type="text" class="form-control" id="address" name="address" placeholder="Adresse" required>
+         <p class="error" id="errorAddress"></p>
+         <label for="city"></label>
+         <input type="text" class="form-control" id="city" name="city" placeholder="Ville" required>
+         <p class="error" id="errorCity"></p>
          <label for="email"></label>
-         <input type="email" class="form-control" id="email" placeholder="mail">
-     </div>
+         <input type="email" class="form-control" id="email" name="firstname" placeholder="Email" required>
+         <p class="error" id="errorEmail"></p>
+         <button type="submit" class="btn btn-primary button">Commander</button>
+     </form>
      
  </main>
  
