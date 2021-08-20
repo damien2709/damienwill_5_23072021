@@ -1,3 +1,5 @@
+const panier= JSON.parse(localStorage.getItem("registeredProducts"));
+localStorage.setItem("registeredProducts", JSON.stringify(panier));
 
 const main = document.getElementById("main");
 const newUl= document.createElement("ul");

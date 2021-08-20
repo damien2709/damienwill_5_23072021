@@ -54,13 +54,8 @@ lienPanier.addEventListener("click", function(event) {
         confirmationCommande.style.color = "green";
         const article = new produitPanier(myProduct, selectOption.value, selectQuantite.value);
         panier.push(article);
-        if(JSON.parse(localStorage.getItem("registeredProducts"))){
-            localStorage.setItem("registeredProducts1", JSON.stringify(panier)); 
+        localStorage.setItem("registeredProducts", JSON.stringify(panier));
         }
-        else{
-            localStorage.setItem("registeredProducts", JSON.stringify(panier));
-        }
-            }
     
     if(selectOption.selectedIndex == 0){
         optionError.innerHTML = `! Merci de choisir une option`;

@@ -133,7 +133,10 @@ form.addEventListener("submit", function (event) {
         errorEmail.style.color= "red";
         event.preventDefault();
     }
+})
 
+    // requête POST : envoi du formulaire
+/*
     fetch("http://localhost:3000/api/cameras/order", 
 {
     method: “POST”,
@@ -146,5 +149,6 @@ form.addEventListener("submit", function (event) {
 });
 
   })
+*/
 
-//envoi du formulaire
+
