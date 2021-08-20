@@ -18,6 +18,8 @@ let errorNom = document.getElementById("errorNom");
 let errorAddress = document.getElementById("errorAddress");
 let errorCity = document.getElementById("errorCity");
 let errorEmail = document.getElementById("errorEmail");
+let tableauInput = [prenom, nom, address, city, email];
+
 
         //variables regex : une regex débute avec "/^" et finit avec "$/". La regex fonctionne pour 1 caractère, il faut ajouter le + pour filtrer une suite de caractères. 
 let regexLettres = /^[a-zA-Z-\s]+$/;
@@ -52,13 +54,12 @@ produitsPanier.innerHTML += `
         </div>
     </div>
     `
-
 //Validation du formulaire. Chaque fois que l'utilisateur tente d'envoyer les données, on vérifie que le champ de l'input est non vide et valide. 
 form.addEventListener("submit", function (event) {
-
-        // Je met en place l'invalidité de champs requis vides. La méthode trim() permet de retirer les blancs en début et fin de chaîne.
+    // Je met en place l'invalidité de champs requis vides. La méthode trim() permet de retirer les blancs en début et fin de chaîne.
             // Champ Prénom
     if (prenom.value.trim() == "") {
+        
         errorPrenom.innerHTML = `Merci de remplir le champ "Prénom"`;
         prenom.style.border= "1px solid red";
         errorPrenom.style.color= "red";
@@ -74,7 +75,7 @@ form.addEventListener("submit", function (event) {
       
     }
             // Champ Nom
-    else if (nom.value.trim() == "") {
+    if (nom.value.trim() == "") {
         errorNom.innerHTML = `Merci de remplir le champ "Nom"`;
         nom.style.border= "1px solid red";
         errorNom.style.color= "red";
@@ -89,7 +90,7 @@ form.addEventListener("submit", function (event) {
     }
         
             // Champ Adresse
-    else if (address.value.trim() == "") {
+    if (address.value.trim() == "") {
         errorAddress.innerHTML = `Merci de remplir le champ "Adresse"`;
         address.style.border= "1px solid red";
         errorAddress.style.color= "red";
@@ -104,7 +105,7 @@ form.addEventListener("submit", function (event) {
     }
 
     // Champ Ville
-    else if (city.value.trim() == "") {
+     if (city.value.trim() == "") {
         errorCity.innerHTML = `Merci de remplir le champ "Adresse"`;
         city.style.border= "1px solid red";
         errorCity.style.color= "red";
@@ -119,7 +120,7 @@ form.addEventListener("submit", function (event) {
     }
 
     // Champ email
-    else if (email.value.trim() == "") {
+    if (email.value.trim() == "") {
         errorEmail.innerHTML = `Merci de remplir le champ "Email"`;
         email.style.border= "1px solid red";
         errorEmail.style.color= "red";
@@ -132,6 +133,18 @@ form.addEventListener("submit", function (event) {
         errorEmail.style.color= "red";
         event.preventDefault();
     }
+
+    fetch("http://localhost:3000/api/cameras/order", 
+{
+    method: “POST”,
+    headers: // ici on crée 2 entêtes (accept et content-type)qui vont prévenir le service web qu’il va recevoir du json. 
+	{ 
+	'Accept': 'application/json', 
+	'Content-Type': 'application/json' 
+	},
+    body: JSON.stringify(jsonBody) // la fonction nous permet de transformer notre objet JavaScript en JSON
+});
+
   })
 
 //envoi du formulaire
