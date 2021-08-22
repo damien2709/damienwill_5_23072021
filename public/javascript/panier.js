@@ -1,10 +1,14 @@
 // Je traduit l'objet JSON du localStorage en javascript
-let productsPanier= JSON.parse(localStorage.getItem("registeredProducts"));
+let productsPanier= JSON.parse(localStorage.getItem("panier"));
 
-//Déclaration des variables
+//Déclaration des variables pour introduction de contenu
 const produitsPanier = document.getElementById("produitsPanier");
-let priceAdjust = (productsPanier[0].price/1000).toFixed(2);
-let quantite = productsPanier[2];
+const total = document.getElementById("montantTotal"); 
+const montantTotalCommande = document.getElementById("montantTotalCommande"); 
+
+//déclaration du tableau qui contiendra les différents montants de commande
+const totalMontants = [];
+
 
     //variables pour validation du questionnaire
 let prenom = document.getElementById("prenom");
@@ -27,33 +31,48 @@ let regexLettresChiffres = /^[a-zA-Z-\s0-9]+$/;
 let regexEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
 //déclaration des fonctions
-        //fonction calcul du cout total
-function coutTotal(a,b){
+        //fonction calcul du cout d'une commande d'1 article
+function totalProduit(a,b){
     return a*b;
 }
-let result = coutTotal(priceAdjust, quantite).toFixed(2);
 
 //création des éléments de la page 
-produitsPanier.innerHTML += `
+for(let i in productsPanier){
+    let priceAdjust = (productsPanier[i].price/1000).toFixed(2);
+    let total = (totalProduit(priceAdjust, productsPanier[i].quantite)).toFixed(2);
+    // je pousse les totaux de chaque produit dans un tableau de calcul de commande, dans leur version nombre (sinon ça va devenir des strings)
+    totalMontants.push(total).toFixed(2);
+    produitsPanier.innerHTML += `
     <div class="row" style="border: 1px solid black; margin: 10px; padding: 10px 0">
         <div class="col">
+            <div class="col">${productsPanier[i].name}</div>
             <div class="col">
-                <img src="${productsPanier[0].imageUrl}" alt="" class="imgProduct">
+                <img src="${productsPanier[i].image}" alt="" class="imgProduct">
             </div>
-            <div class="col">${productsPanier[0].name}</div>
         </div>
         <div class="col">
-            <div class="col"><p>Prix : ${priceAdjust} euros TTC</p></div>
-            <div class="col"><p>Option choisie : ${productsPanier[1]}</p></div>
-            <div class="col">Quantité : ${quantite}</div>
-        </div>
-    </div>
-    <div class="row container">
-        <div class="col" style="margin: 10px; padding: 10px 0">
-            Coût total : ${result} euros TTC
+            <div class="col"><p>Prix article : ${priceAdjust} euros TTC</p></div>
+            <div class="col"><p>Option : ${productsPanier[i].optionChoisie}</p></div>
+            <div class="col"><p>Quantité : ${productsPanier[i].quantite}</p></div>
+            <div class="col total"><p>Total : ${total} euros TTC</p></div>
         </div>
     </div>
     `
+}
+
+//calcul du cout total de la commande
+let totalCommande = 0;
+for(let i = 0; i<totalMontants.length; i++)
+    {
+        totalCommande += Number(totalMontants[i]);
+        
+    }
+let sum = (totalCommande).toFixed(2);    
+console.log(sum);
+
+// introduction du montant total de la commande dans le html
+montantTotalCommande.innerHTML = `Montant total de la commande : ${sum} euros TTC`
+
 //Validation du formulaire. Chaque fois que l'utilisateur tente d'envoyer les données, on vérifie que le champ de l'input est non vide et valide. 
 form.addEventListener("submit", function (event) {
     // Je met en place l'invalidité de champs requis vides. La méthode trim() permet de retirer les blancs en début et fin de chaîne.
@@ -133,13 +152,18 @@ form.addEventListener("submit", function (event) {
         errorEmail.style.color= "red";
         event.preventDefault();
     }
-})
 
-    // requête POST : envoi du formulaire
-/*
-    fetch("http://localhost:3000/api/cameras/order", 
+// préparation objet de contact et tableau de produits pour Requête POST vers API
+        //déclaration de l'objet contact
+const contactApi = {};
+
+        //déclaration du tableau qui comprendra la commande et le contact, à envoyer à l'API en POST
+const envoiPanierApi = [];
+
+//requête POST vers API
+fetch("http://localhost:3000/api/cameras/order", 
 {
-    method: “POST”,
+    method: `POST`,
     headers: // ici on crée 2 entêtes (accept et content-type)qui vont prévenir le service web qu’il va recevoir du json. 
 	{ 
 	'Accept': 'application/json', 
@@ -147,8 +171,11 @@ form.addEventListener("submit", function (event) {
 	},
     body: JSON.stringify(jsonBody) // la fonction nous permet de transformer notre objet JavaScript en JSON
 });
+})
 
-  })
-*/
+    // requête POST : envoi du formulaire
+
+    
+
 
 
