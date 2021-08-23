@@ -11,6 +11,7 @@ fetch("http://localhost:3000/api/cameras")
   //1.2. transformation de la réponse (objet de type "response" de l'API fetch) de la requête en objet JSON (grace àla méthode de l'objet response : "json") et gestion erreur serveur (ok est une propriété de l'objet response : si requête entre 200 et 299 = true). La réponse créant l'bjet JSON est une promesse, on utilise donc les 2 méthodes "then" et "catch" pour ajouter des fonctions en cas de résolution ou d'échec de la promesse.
 .then(response => {
   if(response.ok){
+    console.log("response = OK")
     return response.json()
 }
   else {

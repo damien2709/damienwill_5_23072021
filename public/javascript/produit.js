@@ -18,12 +18,13 @@ let tableauCommande = [];
 
 //Je crée une classe d'articles qui va créer des objets contenant :  my product + le choix de l'option + le choix de la quantité. 
 class produitPanier {
-    constructor(name, image, optionChoisie, price, quantite)
+    constructor(name, image, optionChoisie, price, id, quantite)
     {
         this.name= name;
         this.image= image;
         this.optionChoisie= optionChoisie;
         this.price= price;
+        this.id= id;
         this.quantite= quantite;
     }
 }
@@ -52,7 +53,7 @@ lienPanier.addEventListener("click", function(event) {
         quantiteError.innerHTML = ``;
         confirmationCommande.innerHTML= `Votre produit a été ajouté au panier !`;
         confirmationCommande.style.color = "green";
-        const article = new produitPanier(myProduct.name, myProduct.imageUrl, selectOption.value, myProduct.price, selectQuantite.value);
+        const article = new produitPanier(myProduct.name, myProduct.imageUrl, selectOption.value, myProduct.price, myProduct._id, selectQuantite.value);
         // Afin de conserver les articles du panier, je crée des conditions, si il n'y a pas de panier dans le localstorage, j'en crée un en initialisant ma variable dans le code, s'il y a déjà un panier dans le local storage, je créé ma variable panier à partir du localstorage. 
         if(localStorage.getItem("panier")){
             let panier= JSON.parse(localStorage.getItem("panier"));
