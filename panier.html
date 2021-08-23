@@ -42,7 +42,7 @@
             <h1>Votre panier</h1>
          </div>  
      </div>
-     <div class="row" style="border: 1px solid black; margin: 10px; padding: 10px 0">
+     <div class="row">
         <div class="col" id="montantTotalCommande"></div>
     </div>
      <form class="form-group" id="form" action="" novalidate> <!-- novalidate permet d'empecher le navigateur de valider les champs du formulaire. On peut le faire avec JS. l'attribut "action" indique l'adresse de la page du serveur à qui renvoyer le formulaire-->
@@ -62,7 +62,7 @@
          <label for="email"></label>
          <input type="email" class="form-control" id="email" name="firstname" placeholder="Email" required>
          <p class="error" id="errorEmail"></p>
-         <button type="submit" class="btn btn-primary button">Commander</button>
+         <button type="submit" class="btn btn-primary button" id="button">Commander</button>
      </form>
      
  </main>

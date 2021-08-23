@@ -64,7 +64,8 @@ lienPanier.addEventListener("click", function(event) {
             let panier = [];
             panier.push(article);
             localStorage.setItem("panier", JSON.stringify(panier));
-        }   
+        } 
+          
         }
     // Si aucune option n'est sélectionnée, message d'erreur et desactivation du bouton d'envoi
     if(selectOption.selectedIndex == 0){

@@ -1,8 +1,6 @@
 // Je traduit l'objet JSON du localStorage en javascript
 let productsPanier= JSON.parse(localStorage.getItem("panier"));
-//verif
-console.table(productsPanier);
-console.log(productsPanier[0].id);
+//verif : console.table(productsPanier); console.log(productsPanier[0].id);
 
 //Déclaration des variables pour introduction de contenu
 const produitsPanier = document.getElementById("produitsPanier");
@@ -37,43 +35,64 @@ function totalProduit(a,b){
     return a*b;
 }
 
-//création des éléments de la page 
-for(let i in productsPanier){
-    let priceAdjust = (productsPanier[i].price/1000).toFixed(2);
-    let total = (totalProduit(priceAdjust, productsPanier[i].quantite)).toFixed(2);
-    // je pousse les totaux de chaque produit dans un tableau de calcul de commande, dans leur version nombre (sinon ça va devenir des strings)
-    totalMontants.push(total).toFixed(2);
+function panierVide(){
     produitsPanier.innerHTML += `
-    <div class="row" style="border: 1px solid black; margin: 10px; padding: 10px 0">
-        <div class="col">
-            <div class="col">${productsPanier[i].name}</div>
-            <div class="col">
-                <img src="${productsPanier[i].image}" alt="" class="imgProduct">
-            </div>
-        </div>
-        <div class="col">
-            <div class="col"><p>Prix article : ${priceAdjust} euros TTC</p></div>
-            <div class="col"><p>Option : ${productsPanier[i].optionChoisie}</p></div>
-            <div class="col"><p>Quantité : ${productsPanier[i].quantite}</p></div>
-            <div class="col total"><p>Total : ${total} euros TTC</p></div>
-        </div>
+    <div class="row" style=" margin: 10px; padding: 10px 0">
+        <div class="col" style="color: red;">Votre panier est vide</div>
     </div>
     `
+    // je désactive le bouton de formulaire si le panier est vide
+    document.getElementById("button").disabled = true;
+}
+//création des éléments de la page 
+if(productsPanier == null || productsPanier.length == 0){
+     panierVide();
 }
 
-//calcul du cout total de la commande
-let totalCommande = 0;
-for(let i = 0; i<totalMontants.length; i++)
-    {
-        totalCommande += Number(totalMontants[i]);
-        
-    }
-let sum = (totalCommande).toFixed(2);    
-//verif
-console.log(sum);
+else{
+    for(let i in productsPanier){
+        let priceAdjust = (productsPanier[i].price/1000).toFixed(2);
+        let total = (totalProduit(priceAdjust, productsPanier[i].quantite)).toFixed(2);
+        // je pousse les totaux de chaque produit dans un tableau de calcul de commande, dans leur version nombre (sinon ça va devenir des strings)
+        totalMontants.push(total).toFixed(2);
+        produitsPanier.innerHTML += `
+        <div class="row" style="border: 1px solid black; margin: 10px; padding: 10px 0">
+            <div class="col">
+                <div class="col">${productsPanier[i].name}</div>
+                <div class="col">
+                    <img src="${productsPanier[i].image}" alt="" class="imgProduct">
+                </div>
+            </div>
+            <div class="col" style="margin-top: 20px;">
+                <div class="col"><p>Prix article : ${priceAdjust} euros TTC</p></div>
+                <div class="col"><p>Option : ${productsPanier[i].optionChoisie}</p></div>
+                <div class="col"><p>Quantité : ${productsPanier[i].quantite}</p></div>
+                <div class="col total"><p>Total : ${total} euros TTC</p></div>
+                <button class="btn btn-danger" id="supprimBtn">Supprimer l'article</button>
+            </div>
+        </div>
+        `
 
-// introduction du montant total de la commande dans le html
-montantTotalCommande.innerHTML = `Montant total de la commande : ${sum} euros TTC`
+        //calcul du cout total de la commande
+        let totalCommande = 0;
+        for(let i = 0; i<totalMontants.length; i++)
+        {
+        totalCommande += Number(totalMontants[i]);
+        }
+        let sum = (totalCommande).toFixed(2);    
+        //verif
+        console.log(sum);
+        // introduction du montant total de la commande dans le html
+        montantTotalCommande.innerHTML = `Montant total de la commande : ${sum} euros TTC`
+
+        // paramétrage du bouton "supprimer"
+        document.getElementById("supprimBtn").addEventListener("click", function(){
+            productsPanier.splice(productsPanier[i],1);
+            localStorage.setItem("panier", JSON.stringify(productsPanier));
+            window.location.reload();
+        }
+        )
+}}
 
 //Validation du formulaire. Chaque fois que l'utilisateur tente d'envoyer les données, on vérifie que le champ de l'input est non vide et valide. 
 form.addEventListener("submit", function (event) {
