@@ -172,10 +172,9 @@ form.addEventListener("submit", function (event) {
                         products.push(subProduct.toString());
                         
                     };
-                    alert("tout est OK !");
-                    //verif : alert(products);
+                                        //verif : alert("tout est OK !");
 
-                            //déclaration de l'objet order comprenant le contact et le tableau des produits pour requête POST API
+                            //déclaration de l'objet panierFinal comprenant le contact et le tableau des produits pour requête POST API
                 let panierFinal = {
                     contact: contact,
                     products: products
@@ -203,11 +202,12 @@ form.addEventListener("submit", function (event) {
                                 console.log('Mauvaise réponse du serveur !')
                             }
                         })
-
+                    //enregistrement du panierFinal et du montant total de la commande dans localStorage
                     .then(responseServer => {
-                        const newDiv= document.createElement("div");
-                        main.appendChild(newDiv);
-                        newDiv.innerHTML= `${responseServer.orderId}`
+                        localStorage.setItem("commande", JSON.stringify(responseServer));
+                        localStorage.setItem("montantTotal", JSON.stringify(sum));
+                         //ouvrir la page de confirmation de commande
+                        window.location.href="../../confirmation.html";
                     })
 
                     // Lance affiche l'erreur dans la console s'il y en a une
@@ -216,11 +216,6 @@ form.addEventListener("submit", function (event) {
                     }) 
                 }      
             })
-
- // préparation objet de contact et tableau de produits pour Requête POST vers API
-        
-        //déclaration de l'objet contact pour requête POST API
-
 
 
 
