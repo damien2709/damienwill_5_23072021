@@ -79,7 +79,9 @@ else{
         {
         totalCommande += Number(totalMontants[i]);
         }
-        let sum = (totalCommande).toFixed(2);    
+        let sum = (totalCommande).toFixed(2);
+        // Je garde en mémoire le montant total pour ma page de confirmation
+        localStorage.setItem("montantTotal", JSON.stringify(sum));    
         //verif
         console.log(sum);
         // introduction du montant total de la commande dans le html
@@ -112,8 +114,10 @@ form.addEventListener("submit", function (event) {
                 firstName.style.border= "1px solid red";
                 errorPrenom.style.color= "red";
                 event.preventDefault();
-              // S'il est invalide, on affiche un message d'erreur personnalisé
-              
+            }
+            if (firstName.value.trim() != "" && regexLettres.test(firstName.value) != false){
+                errorPrenom.innerHTML = ``;
+                firstName.style.border= "1px solid black";
             }
                     // Champ Nom
             if (lastName.value.trim() == "") {
@@ -128,6 +132,10 @@ form.addEventListener("submit", function (event) {
                 lastName.style.border= "1px solid red";
                 errorNom.style.color= "red";
                 event.preventDefault();
+            }
+            if (lastName.value.trim() != "" && regexLettres.test(lastName.value) != false){
+                errorNom.innerHTML = ``;
+                lastName.style.border= "1px solid black";
             }
                 
                     // Champ Adresse
@@ -144,6 +152,10 @@ form.addEventListener("submit", function (event) {
                 errorAddress.style.color= "red";
                 event.preventDefault();
             }
+            if (address.value.trim() != "" && regexLettresChiffres.test(address.value) != false){
+                errorAddress.innerHTML = ``;
+                address.style.border= "1px solid black";
+            }
         
             // Champ Ville
              if (city.value.trim() == "") {
@@ -158,6 +170,10 @@ form.addEventListener("submit", function (event) {
                 city.style.border= "1px solid red";
                 errorCity.style.color= "red";
                 event.preventDefault();
+            }
+            if (city.value.trim() != "" && regexLettres.test(city.value) != false){
+                errorCity.innerHTML = ``;
+                city.style.border= "1px solid black";
             }
         
             // Champ email
@@ -174,6 +190,11 @@ form.addEventListener("submit", function (event) {
                 errorEmail.style.color= "red";
                 event.preventDefault();
             }
+            if (email.value.trim() != "" && regexEmail.test(email.value) != false){
+                errorEmail.innerHTML = ``;
+                email.style.border= "1px solid black";
+            }
+
             if (firstName.value.trim() != "" && regexLettres.test(firstName.value) != false && lastName.value.trim() != "" && regexLettres.test(lastName.value) != false && address.value.trim() != "" && regexLettresChiffres.test(address.value) != false && city.value.trim() != "" && regexLettres.test(city.value) != false && email.value.trim() != "" && regexEmail.test(email.value) != false){
                     event.preventDefault();
                     let contact = {
@@ -224,7 +245,7 @@ form.addEventListener("submit", function (event) {
                     //enregistrement du panierFinal et du montant total de la commande dans localStorage
                     .then(responseServer => {
                         localStorage.setItem("commande", JSON.stringify(responseServer));
-                        localStorage.setItem("montantTotal", JSON.stringify(sum));
+                        
                          //ouvrir la page de confirmation de commande
                         window.location.href="../../confirmation.html";
                     })
