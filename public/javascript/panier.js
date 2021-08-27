@@ -1,6 +1,7 @@
 // Je traduit l'objet JSON du localStorage en javascript
 let productsPanier= JSON.parse(localStorage.getItem("panier"));
-//verif : console.table(productsPanier); console.log(productsPanier[0].id);
+//verif : 
+console.table(productsPanier); 
 
 //Déclaration des variables pour introduction de contenu
 const produitsPanier = document.getElementById("produitsPanier");
@@ -26,15 +27,41 @@ let errorEmail = document.getElementById("errorEmail");
 
         //variables regex : une regex débute avec "/^" et finit avec "$/". La regex fonctionne pour 1 caractère, il faut ajouter le + pour filtrer une suite de caractères. 
 let regexLettres = /^[a-zA-Z-\s]+$/;
+//test regex
+if (regexLettres.test("dam27") == false){
+    console.log("regexLettres = OK");
+}
+else {console.log("regexLettres = NOT");}
 let regexLettresChiffres = /^[a-zA-Z-\s0-9]+$/;
+//test regex
+if (regexLettresChiffres.test("123 dam") == true){
+    console.log("regexLettresChiffres = OK");
+}
+else {console.log("regexLettresChiffres = NOT");}
 let regexEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+//test regex
+if (regexEmail.test("dam27@com" && "dam27.com") == false){
+    console.log("regexEmail = OK");
+}
+else {console.log("regexEmail = NOT");}
 
 //déclaration des fonctions
         //fonction calcul du cout d'une commande d'1 article
 function totalProduit(a,b){
     return a*b;
 }
+//test fonction totalProduit
+let result1 = totalProduit(4,5);
+if (result1 ===20){
+    console.log("fonction TotalProduit OK")
+}
+else {console.log("fonction TotalProduit NOT")}
 
+function calculPrix(a){
+    return (a/1000).toFixed(2);
+};
+
+        // fonction d'affichage alerte de panier vide et de desactivation du bouton
 function panierVide(){
     produitsPanier.innerHTML += `
     <div class="row" style=" margin: 10px; padding: 10px 0">
@@ -44,14 +71,14 @@ function panierVide(){
     // je désactive le bouton de formulaire si le panier est vide
     document.getElementById("button").disabled = true;
 }
-//création des éléments de la page 
+//Avertissement de panier vide
 if(productsPanier == null || productsPanier.length == 0){
      panierVide();
 }
 
 else{
     for(let i in productsPanier){
-        let priceAdjust = (productsPanier[i].price/1000).toFixed(2);
+        let priceAdjust = calculPrix(productsPanier[i].price);
         let total = (totalProduit(priceAdjust, productsPanier[i].quantite)).toFixed(2);
         // je pousse les totaux de chaque produit dans un tableau de calcul de commande, dans leur version nombre (sinon ça va devenir des strings)
         totalMontants.push(total).toFixed(2);
@@ -95,14 +122,12 @@ else{
         }
         )
 }}
-
 //Validation du formulaire. Chaque fois que l'utilisateur tente d'envoyer les données, on vérifie que le champ de l'input est non vide et valide. 
 form.addEventListener("submit", function (event) {
 
     // Je met en place l'invalidité de champs requis vides. La méthode trim() permet de retirer les blancs en début et fin de chaîne.
             // Champ Prénom
             if (firstName.value.trim() == "") {
-        
                 errorPrenom.innerHTML = `Merci de remplir le champ "Prénom"`;
                 firstName.style.border= "1px solid red";
                 errorPrenom.style.color= "red";
@@ -115,6 +140,7 @@ form.addEventListener("submit", function (event) {
                 errorPrenom.style.color= "red";
                 event.preventDefault();
             }
+            // j'enlève les messages d'erreur si le champ est finalement correctement rempli
             if (firstName.value.trim() != "" && regexLettres.test(firstName.value) != false){
                 errorPrenom.innerHTML = ``;
                 firstName.style.border= "1px solid black";
@@ -164,7 +190,7 @@ form.addEventListener("submit", function (event) {
                 errorCity.style.color= "red";
                 event.preventDefault();
             }
-                    // je teste avec la méthode "test" de ma regex pour les lettres la valeur de l'élément (champ input) "prenom". La méthode renvoit "true" ou "false".
+                    
             else if (regexLettres.test(city.value) == false){
                 errorCity.innerHTML = `Le champ "Ville" peut contenir uniquement des lettres et des tirets`;
                 city.style.border= "1px solid red";
@@ -183,7 +209,7 @@ form.addEventListener("submit", function (event) {
                 errorEmail.style.color= "red";
                 event.preventDefault();
             }
-                    // je teste avec la méthode "test" de ma regex pour les lettres la valeur de l'élément (champ input) "prenom". La méthode renvoit "true" ou "false".
+
             else if (regexEmail.test(email.value) == false){
                 errorEmail.innerHTML = `L'email déclaré n'est pas valide`;
                 email.style.border= "1px solid red";
@@ -195,6 +221,7 @@ form.addEventListener("submit", function (event) {
                 email.style.border= "1px solid black";
             }
 
+            //maintenant, si tous mes champs sont valides et vérifiés, je désactive la fonction initiale d'envoi du bouton de formulaire (il servira à déclencher la requête POST). je crée mon objet "contact", mon tableau des produits, j'insère les 2 dans un tableau "panierFinal" qui sera inséré dans le body de la requête. 
             if (firstName.value.trim() != "" && regexLettres.test(firstName.value) != false && lastName.value.trim() != "" && regexLettres.test(lastName.value) != false && address.value.trim() != "" && regexLettresChiffres.test(address.value) != false && city.value.trim() != "" && regexLettres.test(city.value) != false && email.value.trim() != "" && regexEmail.test(email.value) != false){
                     event.preventDefault();
                     let contact = {
