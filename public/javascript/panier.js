@@ -73,18 +73,18 @@ else{
         // je pousse les totaux de chaque produit dans un tableau de calcul de commande, dans leur version nombre (sinon ça va devenir des strings)
         totalMontants.push(total).toFixed(2);
         produitsPanier.innerHTML += `
-        <div class="row" style="border: 1px solid black; margin: 10px; padding: 10px 0">
-            <div class="col">
-                <div class="col">${productsPanier[i].name}</div>
-                <div class="col">
-                    <img src="${productsPanier[i].image}" alt="" class="imgProduct">
-                </div>
+        <div class="col-12 col-md-6 col-lg-4 card">
+            <div class="card-body">
+                <h2 class="card-title">${productsPanier[i].name}</h2>
             </div>
-            <div class="col" style="margin-top: 20px;">
-                <div class="col"><p>Prix article : ${priceAdjust} euros TTC</p></div>
-                <div class="col"><p>Option : ${productsPanier[i].optionChoisie}</p></div>
-                <div class="col"><p>Quantité : ${productsPanier[i].quantite}</p></div>
-                <div class="col total"><p>Total : ${total} euros TTC</p></div>
+            <div class="card-img">
+                    <img src="${productsPanier[i].image}" alt="Appareil photo Orinico" class="imgProduct">
+            </div>
+            <div class="card-body">
+                <p class="card-text">Prix article : <strong>${priceAdjust} euros TTC</strong></p>
+                <p class="card-text">Option : <strong>${productsPanier[i].optionChoisie}</strong></p>
+                <p class="card-text">Quantité : <strong>${productsPanier[i].quantite}</strong></p>
+                <p class="card-text">Total : <strong>${total} euros TTC</strong></p>
                 <button class="btn btn-danger" id="supprimBtn">Supprimer l'article</button>
             </div>
         </div>
@@ -101,7 +101,7 @@ else{
     localStorage.setItem("montantTotal", JSON.stringify(sum));    
     //verif: console.log(sum);
     // introduction du montant total de la commande dans le html
-    montantTotalCommande.innerHTML = `Montant total de la commande : ${sum} euros TTC`
+    montantTotalCommande.innerHTML = `Total de la commande : <strong>${sum} euros TTC</strong>`
 
     // paramétrage du bouton "supprimer"
     document.getElementById("supprimBtn").addEventListener("click", function(){

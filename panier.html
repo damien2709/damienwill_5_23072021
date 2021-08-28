@@ -13,39 +13,37 @@
 <body>
    
     <!-- Header -->
-<div class="container-fluid">
-    <div class="row">
-        <nav class="col navbar navbar-expand-lg bg-info navbar-light">
-            <a class="col-4 col-lg-2 navbar-brand" href="index.html"><img class="logo__img" src="assets/images/Logo_orinico.png" alt="Logo de la société de vente en ligne Orinico"></a>
+<header class="container-fluid">
+    <div class="row header--div bg-info">
+        <nav class="col navbar navbar-expand-lg navbar-light">
+            <a class="col-6 col-md-4 col-lg-2 navbar-brand" href="index.html"><img class="logo__img" src="assets/images/Logo_orinico.png" alt="Logo de la société de vente en ligne Orinico"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent">
                 <span class="navbar-toggler-icon"></span>
-             </button>
-            <div id="navbarContent" class="collapse navbar-collapse">
-                <ul class=" navbar-nav">
-                    <li class="nav-item active">
+                </button>
+            <div id="navbarContent" class="collapse navbar-collapse justify-content-end">
+                <ul class=" navbar-nav nav-pills">
+                    <li class="nav-item">
                         <a class="nav-link" href="index.html">Accueil</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Panier</a>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="panier.html">Panier</a>
                     </li>
                 </ul>
             </div>
         </nav>
     </div>
-</div>
+</header>
 
  
     <!-- MAIN -->
  <main class="container" id="main">
-     <div  class="row">
-         <div class="col" id="produitsPanier">
-            <h1>Votre panier</h1>
-         </div>  
+    <h1 class="container bg-light">Votre panier</h1>
+     <div  class="row" id="produitsPanier"> 
      </div>
      <div class="row">
-        <div class="col" id="montantTotalCommande"></div>
+        <div class="col alert alert-success" role="alert" id="montantTotalCommande"></div>
     </div>
-     <form class="form-group" id="form" action="" novalidate> <!-- novalidate permet d'empecher le navigateur de valider les champs du formulaire. On peut le faire avec JS. l'attribut "action" indique l'adresse de la page du serveur à qui renvoyer le formulaire-->
+     <form class="form-group col-12 col-md-8 col-lg-6" id="form" action="" novalidate> <!-- novalidate permet d'empecher le navigateur de valider les champs du formulaire. On peut le faire avec JS. l'attribut "action" indique l'adresse de la page du serveur à qui renvoyer le formulaire-->
          <p class="h3">Formulaire de commande</p>
          <label for="prenom"></label>
          <input type="text" class="form-control" id="prenom" name="firstName" placeholder="Prénom" required>
@@ -66,7 +64,10 @@
      </form>
      
  </main>
- 
+  <!-- FOOTER -->
+ <footer class=" container-fluid text-center text-lg-start bg-dark">
+    <p class="text--footer">Orinico- Copyright@2021</p>
+</footer>
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>

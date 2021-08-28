@@ -1,6 +1,6 @@
 //Variables d'éléments html
 const main = document.getElementById("main");
-const newUl= document.createElement("ul");
+const listAppareils = document.getElementById("listAppareils");
 
 // 1. AFFICHAGE DES ARTICLES DANS UNE LISTE 
 
@@ -22,24 +22,24 @@ fetch("http://localhost:3000/api/cameras")
     //1.1.3 Exploitation de l'objet JSON retourné (avec fonction fléchée) pour Affichage des produits dans une liste avec création des éléments d'affichage grace à une boucle. Stylage des éléments. L'objet "data" n'existe que dans cette portée. 
 .then(data => {
   //vérif : console.log(data);
-    main.appendChild(newUl);
-    newUl.setAttribute("class", "list-group")
   for (let i in data){
-    newUl.innerHTML += `
-            <li class="list-group-item">
-                <img src="${data[i].imageUrl}" style="
-                    max-width: 100px;
-                    margin-right= 20px;">
-                <h2 class="list-group-item-action" style="
-                    display: inline-block;
-                    width: 120px;
-                    font-size: 15px;"
-                    >${data[i].name}</h2>
+    listAppareils.innerHTML += `
+            <div class="col-12 col-md-6 col-lg-4 card">
+              <div class="card-body">
+                <h2 class="card-title" style="
+                      font-size: 26px; text-align: center;"
+                      >${data[i].name}</h2>
+              </div>
+              <div class="card-body" style="padding-top:0;">
+                <img class="card-img" src="${data[i].imageUrl}">
+              </div> 
+              <div class="card-body" style="text-align: center;">
                 <a href="produit.html" id="${data[i].name}" class="btn btn-primary" style="
                     display: inline-block;
                     text-align: center;
-                    width: 50px;">Voir</a>
-            </li>
+                    width: 100px;">Voir</a>
+              </div>
+            </div>
         `
   }
     //1.4. paramétrage des boutons/liens "voir" avec localStorage du produit au clic 
