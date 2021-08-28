@@ -10,18 +10,18 @@ fetch("http://localhost:3000/api/cameras")
   //1.2. transformation de la réponse (objet de type "response" de l'API fetch) de la requête en objet JSON (grace àla méthode de l'objet response : "json") et gestion erreur serveur (ok est une propriété de l'objet response : si requête entre 200 et 299 = true). La réponse créant l'objet JSON est une promesse, on utilise donc les 2 méthodes "then" et "catch" pour ajouter des fonctions en cas de résolution ou d'échec de la promesse.
 .then(response => {
   if(response.ok){
-    console.log("response = OK"); //vérification de la bonne communication avec API
+    // vérif : console.log("Réponse de l'API = OK"); //vérification de la bonne communication avec API
     return response.json();
 }
   else {
     // identification de l'erreur si elle existe."status" est une propriété de l'objet response et renvoie la valeur de la requête
     console.log("erreur : " + response.status);
-  }
+  } 
 })
 
     //1.1.3 Exploitation de l'objet JSON retourné (avec fonction fléchée) pour Affichage des produits dans une liste avec création des éléments d'affichage grace à une boucle. Stylage des éléments. L'objet "data" n'existe que dans cette portée. 
 .then(data => {
-  console.log(data);
+  //vérif : console.log(data);
     main.appendChild(newUl);
     newUl.setAttribute("class", "list-group")
   for (let i in data){

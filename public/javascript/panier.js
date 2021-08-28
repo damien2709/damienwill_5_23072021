@@ -1,7 +1,6 @@
 // Je traduit l'objet JSON du localStorage en javascript
 let productsPanier= JSON.parse(localStorage.getItem("panier"));
-//verif : 
-console.table(productsPanier); 
+//verif : console.table(productsPanier); 
 
 //Déclaration des variables pour introduction de contenu
 const produitsPanier = document.getElementById("produitsPanier");
@@ -27,35 +26,26 @@ let errorEmail = document.getElementById("errorEmail");
 
         //variables regex : une regex débute avec "/^" et finit avec "$/". La regex fonctionne pour 1 caractère, il faut ajouter le + pour filtrer une suite de caractères. 
 let regexLettres = /^[a-zA-Z-\s]+$/;
-//test regex
-if (regexLettres.test("dam27") == false){
-    console.log("regexLettres = OK");
-}
-else {console.log("regexLettres = NOT");}
+//test  : if (regexLettres.test("dam27") == false){console.log("regexLettres = OK");}
+//else {console.log("regexLettres = NOT");}
 let regexLettresChiffres = /^[a-zA-Z-\s0-9]+$/;
-//test regex
-if (regexLettresChiffres.test("123 dam") == true){
-    console.log("regexLettresChiffres = OK");
-}
-else {console.log("regexLettresChiffres = NOT");}
+//test regex : if (regexLettresChiffres.test("123 dam") == true){console.log("regexLettresChiffres = OK");}
+//else {console.log("regexLettresChiffres = NOT");}
 let regexEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-//test regex
-if (regexEmail.test("dam27@com" && "dam27.com") == false){
-    console.log("regexEmail = OK");
-}
-else {console.log("regexEmail = NOT");}
+//test regex : if (regexEmail.test("dam27@com" && "dam27.com") == false){console.log("regexEmail = OK");}
+//else {console.log("regexEmail = NOT");}
 
 //déclaration des fonctions
         //fonction calcul du cout d'une commande d'1 article
 function totalProduit(a,b){
     return a*b;
 }
-//test fonction totalProduit
+/* test fonction totalProduit :
 let result1 = totalProduit(4,5);
 if (result1 ===20){
     console.log("fonction TotalProduit OK")
 }
-else {console.log("fonction TotalProduit NOT")}
+else {console.log("fonction TotalProduit NOT")} */
 
 function calculPrix(a){
     return (a/1000).toFixed(2);
@@ -100,27 +90,26 @@ else{
         </div>
         `
 
-        //calcul du cout total de la commande
-        let totalCommande = 0;
-        for(let i = 0; i<totalMontants.length; i++)
-        {
-        totalCommande += Number(totalMontants[i]);
-        }
-        let sum = (totalCommande).toFixed(2);
-        // Je garde en mémoire le montant total pour ma page de confirmation
-        localStorage.setItem("montantTotal", JSON.stringify(sum));    
-        //verif
-        console.log(sum);
-        // introduction du montant total de la commande dans le html
-        montantTotalCommande.innerHTML = `Montant total de la commande : ${sum} euros TTC`
+    //calcul du cout total de la commande
+    let totalCommande = 0;
+    for(let i = 0; i<totalMontants.length; i++)
+    {
+    totalCommande += Number(totalMontants[i]);
+    }
+    let sum = (totalCommande).toFixed(2);
+    // Je garde en mémoire le montant total pour ma page de confirmation
+    localStorage.setItem("montantTotal", JSON.stringify(sum));    
+    //verif: console.log(sum);
+    // introduction du montant total de la commande dans le html
+    montantTotalCommande.innerHTML = `Montant total de la commande : ${sum} euros TTC`
 
-        // paramétrage du bouton "supprimer"
-        document.getElementById("supprimBtn").addEventListener("click", function(){
-            productsPanier.splice(productsPanier[i],1);
-            localStorage.setItem("panier", JSON.stringify(productsPanier));
-            window.location.reload();
-        }
-        )
+    // paramétrage du bouton "supprimer"
+    document.getElementById("supprimBtn").addEventListener("click", function(){
+        productsPanier.splice(productsPanier[i],1);
+        localStorage.setItem("panier", JSON.stringify(productsPanier));
+        window.location.reload();
+    }
+    )
 }}
 //Validation du formulaire. Chaque fois que l'utilisateur tente d'envoyer les données, on vérifie que le champ de l'input est non vide et valide. 
 form.addEventListener("submit", function (event) {
@@ -185,7 +174,7 @@ form.addEventListener("submit", function (event) {
         
             // Champ Ville
              if (city.value.trim() == "") {
-                errorCity.innerHTML = `Merci de remplir le champ "Adresse"`;
+                errorCity.innerHTML = `Merci de remplir le champ "Ville"`;
                 city.style.border= "1px solid red";
                 errorCity.style.color= "red";
                 event.preventDefault();
@@ -223,6 +212,7 @@ form.addEventListener("submit", function (event) {
 
             //maintenant, si tous mes champs sont valides et vérifiés, je désactive la fonction initiale d'envoi du bouton de formulaire (il servira à déclencher la requête POST). je crée mon objet "contact", mon tableau des produits, j'insère les 2 dans un tableau "panierFinal" qui sera inséré dans le body de la requête. 
             if (firstName.value.trim() != "" && regexLettres.test(firstName.value) != false && lastName.value.trim() != "" && regexLettres.test(lastName.value) != false && address.value.trim() != "" && regexLettresChiffres.test(address.value) != false && city.value.trim() != "" && regexLettres.test(city.value) != false && email.value.trim() != "" && regexEmail.test(email.value) != false){
+                // verif : console.log("validation du formulaire = OK"); //Utiliser point d'arrêt du débogeur
                     event.preventDefault();
                     let contact = {
                         firstName: firstName.value, 
@@ -246,8 +236,7 @@ form.addEventListener("submit", function (event) {
                     contact: contact,
                     products: products
                 };
-                    //verif : 
-                localStorage.setItem("order", JSON.stringify(panierFinal));
+                    //verif : localStorage.setItem("order", JSON.stringify(panierFinal));
                     
                     //envoi de la requête POST
                     fetch("http://localhost:3000/api/cameras/order", 
@@ -269,7 +258,7 @@ form.addEventListener("submit", function (event) {
                                 console.log('Mauvaise réponse du serveur !')
                             }
                         })
-                    //enregistrement du panierFinal et du montant total de la commande dans localStorage
+                    //enregistrement de la réponse de l'API dans localStorage
                     .then(responseServer => {
                         localStorage.setItem("commande", JSON.stringify(responseServer));
                         

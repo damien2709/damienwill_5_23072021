@@ -1,8 +1,8 @@
 // Je récupère les objet JSON "commande" et "montantTotal" du localStorage en javascript
 const commande= JSON.parse(localStorage.getItem("commande"));
-console.log(commande);
+// verif : console.log(commande);
 const montantTotal= JSON.parse(localStorage.getItem("montantTotal"));
-console.log(montantTotal);
+//verif : console.log(montantTotal);
 
 //je récupère l'élément main du html et j'y ajoute du contenu (remerciement, confirmation de commande, prix total, id de commande)
 const main = document.getElementById("main");

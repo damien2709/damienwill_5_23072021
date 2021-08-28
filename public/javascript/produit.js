@@ -1,6 +1,6 @@
 // Je traduit l'objet JSON du localStorage en javascript
 let myProduct= JSON.parse(localStorage.getItem("product"));
-console.table(myProduct);//vérification du produit
+// Vérif : console.table(myProduct);//vérification du produit
 
 //variables et constantes représentant les éléments html qui ont été créés dans le HTML, pour les remplir et les styler
 const main = document.getElementById("main");
@@ -46,7 +46,7 @@ function affichageValidation(){
 function calculPrix(a){
     return (a/1000).toFixed(2);
 };
-console.log(calculPrix(49900));//vérification de la fonction CalculPrix
+// Vérif : console.log(calculPrix(49900));
 
 //je traduis le prix brut à 6 chiffres en euros avec deux décimales
 let priceAdjust = calculPrix(myProduct.price);
@@ -63,10 +63,34 @@ for(let i in myProduct.lenses){
 
 //paramétrage de l'évenement click : si les options et la quantité ne sont pas à 0, alors je crée un nouvel objet "article" de la classe "produitPanier", qui sera stocké dans le tableau "panier", ce tableau sera envoyé dans le local storage. 
 lienPanier.addEventListener("click", function(event) {
+    // Si aucune option n'est sélectionnée, message d'erreur et desactivation du bouton d'envoi
+    if(selectOption.selectedIndex == 0){
+        optionError.innerHTML = `Merci de choisir une option !`;
+        optionError.style.color = `red`;
+        event.preventDefault;  
+    }
+    // Si l'option est sélectionnée, on enlève le mesage d'erreur
+    if(selectOption.selectedIndex != 0){
+        optionError.innerHTML = ``;
+        optionError.style.color = `initial`;
+        event.preventDefault;
+    }
+   // Si aucune quantité n'est sélectionnée, message d'erreur et desactivation du bouton d'envoi
+    if(selectQuantite.selectedIndex == 0){
+        quantiteError.innerHTML = `Merci de choisir une quantité !`;
+        quantiteError.style.color = `red`;
+        event.preventDefault;
+    }
+    // Si l'option est sélectionnée, on enlève le mesage d'erreur
+    if(selectQuantite.selectedIndex != 0){
+        quantiteError.innerHTML = ``;
+        quantiteError.style.color = `initial`;
+        event.preventDefault;
+    }
     if(selectOption.selectedIndex != 0 && selectQuantite.selectedIndex != 0){
         const article = new produitPanier(myProduct.name, myProduct.imageUrl, selectOption.value, myProduct.price, myProduct._id, selectQuantite.value);
         affichageValidation();
-        // Afin de conserver les articles du panier, je crée des conditions, si il n'y a pas de panier dans le localstorage, j'en crée un en initialisant ma variable dans le code, s'il y a déjà un panier dans le local storage, je créé ma variable panier à partir du localstorage. 
+        // Afin de conserver plusieurs articles dans le panier, je crée des conditions: si il n'y a pas de panier dans le localstorage, j'en crée un en initialisant ma variable dans le code, s'il y a déjà un panier dans le local storage, je créé ma variable panier à partir du localstorage. 
         if(localStorage.getItem("panier")){
             let panier= JSON.parse(localStorage.getItem("panier"));
             panier.push(article);
@@ -79,18 +103,7 @@ lienPanier.addEventListener("click", function(event) {
         } 
           
         }
-    // Si aucune option n'est sélectionnée, message d'erreur et desactivation du bouton d'envoi
-    if(selectOption.selectedIndex == 0){
-        optionError.innerHTML = `! Merci de choisir une option`;
-        optionError.style.color = `red`;
-        event.preventDefault;  
-    }
-   // Si aucune quantité n'est sélectionnée, message d'erreur et desactivation du bouton d'envoi
-    if(selectQuantite.selectedIndex == 0){
-        quantiteError.innerHTML = `! Merci de choisir une quantité`;
-        quantiteError.style.color = `red`;
-        event.preventDefault;
-    }
+    
 
 })
 
