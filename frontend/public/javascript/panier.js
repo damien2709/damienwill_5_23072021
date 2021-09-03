@@ -3,13 +3,11 @@ let productsPanier= JSON.parse(localStorage.getItem("panier"));
 //verif : console.table(productsPanier); 
 
 //Déclaration des variables pour introduction de contenu
-const produitsPanier = document.getElementById("panier");
-const total = document.getElementById("montantTotal"); 
-const montantTotalCommande = document.getElementById("montantTotalCommande"); 
-
-//déclaration du tableau qui contiendra les différents montants de commande
-const totalMontants = [];
-
+const montantTotal = document.getElementById("montantTotal"); 
+const montantTotalCommande = document.getElementById("montantTotalCommande");
+const produitsPanier = document.getElementById("produitsPanier");
+//Variables pour le calcul du montant total
+const totalMontants = []; //déclaration du tableau qui contiendra les différents montants de commande
 
     //variables pour validation du questionnaire
 let firstName = document.getElementById("prenom");
@@ -35,82 +33,40 @@ let regexEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9
 //test regex : if (regexEmail.test("dam27@com" && "dam27.com") == false){console.log("regexEmail = OK");}
 //else {console.log("regexEmail = NOT");}
 
-//déclaration des fonctions
-        //fonction calcul du cout d'une commande d'1 article
-function totalProduit(a,b){
-    return a*b;
-}
-/* test fonction totalProduit :
-let result1 = totalProduit(4,5);
-if (result1 ===20){
-    console.log("fonction TotalProduit OK")
-}
-else {console.log("fonction TotalProduit NOT")} */
 
-function calculPrix(a){
-    return (a/1000).toFixed(2);
-};
-
-        // fonction d'affichage alerte de panier vide et de desactivation du bouton
-function panierVide(){
-    produitsPanier.innerHTML += `
-    <div class="row" style=" margin: 10px; padding: 10px 0">
-        <div class="col" style="color: red;">Votre panier est vide</div>
-    </div>
-    `
-    // je désactive le bouton de formulaire si le panier est vide
-    document.getElementById("button").disabled = true;
-}
-//Avertissement de panier vide
+    // si panier vide, alors affichage alerte + désactivation bouton forumlaire, sinon pour chaque article je calcule les coûts et j'affiche les produits et les informations de prix sur la page
 if(productsPanier == null || productsPanier.length == 0){
      panierVide();
 }
-
+//pour afficher les articles du panier et leurs montants
 else{
     for(let i in productsPanier){
         let priceAdjust = calculPrix(productsPanier[i].price);
-        let total = (totalProduit(priceAdjust, productsPanier[i].quantite)).toFixed(2);
-        // je pousse les totaux de chaque produit dans un tableau de calcul de commande, dans leur version nombre (sinon ça va devenir des strings)
-        totalMontants.push(total).toFixed(2);
+        var total = (totalProduit(priceAdjust, productsPanier[i].quantite)).toFixed(2);
+        totalMontants.push(total).toFixed(2); // je pousse les totaux de chaque produit dans un tableau de calcul de commande, dans leur version nombre (sinon ça va devenir des strings)
         produitsPanier.innerHTML += `
-        <div class="col-12 col-md-6 col-lg-4 card">
-            <div class="card-body">
-                <h2 class="card-title">${productsPanier[i].name}</h2>
-            </div>
-            <div class="card-img">
-                    <img src="${productsPanier[i].image}" alt="Appareil photo Orinico" class="imgProduct">
-            </div>
-            <div class="card-body">
-                <p class="card-text">Prix article : <strong>${priceAdjust} euros TTC</strong></p>
-                <p class="card-text">Option : <strong>${productsPanier[i].optionChoisie}</strong></p>
-                <p class="card-text">Quantité : <strong>${productsPanier[i].quantite}</strong></p>
-                <p class="card-text">Total : <strong>${total} euros TTC</strong></p>
-                <button class="btn btn-danger" id="supprimBtn">Supprimer l'article</button>
-            </div>
+    <div class="col-12 col-md-6 col-lg-4 card">
+        <div class="card-body">
+            <h2 class="card-title">${productsPanier[i].name}</h2>
         </div>
-        `
-
-    //calcul du cout total de la commande
-    let totalCommande = 0;
-    for(let i = 0; i<totalMontants.length; i++)
-    {
-    totalCommande += Number(totalMontants[i]);
-    }
-    let sum = (totalCommande).toFixed(2);
-    // Je garde en mémoire le montant total pour ma page de confirmation
-    localStorage.setItem("montantTotal", JSON.stringify(sum));    
-    //verif: console.log(sum);
-    // introduction du montant total de la commande dans le html
-    montantTotalCommande.innerHTML = `Total de la commande : <strong>${sum} euros TTC</strong>`
-
-    // paramétrage du bouton "supprimer"
-    document.getElementById("supprimBtn").addEventListener("click", function(){
-        productsPanier.splice(productsPanier[i],1);
-        localStorage.setItem("panier", JSON.stringify(productsPanier));
-        window.location.reload();
-    }
-    )
+        <div class="card-img">
+                <img src="${productsPanier[i].image}" alt="Appareil photo Orinico" class="imgProduct">
+        </div>
+        <div class="card-body">
+            <p class="card-text">Prix article : <strong>${priceAdjust} euros TTC</strong></p>
+            <p class="card-text">Option : <strong>${productsPanier[i].optionChoisie}</strong></p>
+            <p class="card-text">Quantité : <strong>${productsPanier[i].quantite}</strong></p>
+            <p class="card-text">Total : <strong>${total} euros TTC</strong></p>
+            <button class="btn btn-danger" id="supprimBtn">Supprimer l'article</button>
+        </div>
+    </div>
+    `;  
+    
 }}
+
+    // je calcule, j'enregistre le  montant total dans le web storage et j'affiche le montant total de la commande 
+calculMontantCommande();
+
 //Validation du formulaire. Chaque fois que l'utilisateur tente d'envoyer les données, on vérifie que le champ de l'input est non vide et valide. 
 form.addEventListener("submit", function (event) {
 
