@@ -49,22 +49,19 @@ function validationAjoutArticlePanier(a, b){
        
 };
  
-//FONCTION de suppression d'un produit dans le panier
-// paramétrage du bouton "supprimer"
-function supprimArticle () {
-    productsPanier.splice(productsPanier[i],1);
-    localStorage.setItem("panier", JSON.stringify(productsPanier));
+//FONCTION de suppression d'un produit dans le panier : paramétrage du bouton "supprimer l'article" avec 2 paramètres : l'article et le tableau représentant le panier
+function supprimArticle (article, panier) {
+    productsPanier.splice(article, 1);
+    localStorage.setItem("panier", JSON.stringify(panier));
     window.location.reload();
     }
 
-// FONCTION d'alerte panier vide
-function panierVide () {
-        if(productsPanier == null){
+// FONCTION d'alerte panier vide : ja'ffiche un avertissement de panier vide et je désactive le bouton de formulaire si le panier est vide
+function panierVide() {
         document.getElementById("produitsPanier").innerHTML += `
         <div class="row" style=" margin: 10px; padding: 10px 0">
             <div class="col" style="color: red;">Votre panier est vide</div>
-        </div>
-        `;
-        document.getElementById("buttonCommande").disabled = true; // je désactive le bouton de formulaire si le panier est vide
-        }
+        </div>`;
+        montantTotalCommande.style.display = "none";
+        form.style.display = "none";
     };

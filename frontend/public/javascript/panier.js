@@ -6,6 +6,8 @@ let productsPanier= JSON.parse(localStorage.getItem("panier"));
 const montantTotal = document.getElementById("montantTotal"); 
 const montantTotalCommande = document.getElementById("montantTotalCommande");
 const produitsPanier = document.getElementById("produitsPanier");
+const form = document.getElementById("form");
+
 //Variables pour le calcul du montant total
 const totalMontants = []; //déclaration du tableau qui contiendra les différents montants de commande
 
@@ -15,7 +17,6 @@ let lastName = document.getElementById("nom");
 let address = document.getElementById("address");
 let city = document.getElementById("city");
 let email = document.getElementById("email");
-let form = document.getElementById("form");
 let errorPrenom = document.getElementById("errorPrenom");
 let errorNom = document.getElementById("errorNom");
 let errorAddress = document.getElementById("errorAddress");
@@ -61,8 +62,11 @@ else{
         </div>
     </div>
     `;  
-    
-}}
+        // je paramètre le bouton "supprimer" pour chaque article 
+        document.getElementById("supprimBtn").addEventListener("click", function(){
+        supprimArticle(productsPanier[i], productsPanier);
+        })
+}};
 
     // je calcule, j'enregistre le  montant total dans le web storage et j'affiche le montant total de la commande 
 calculMontantCommande();
