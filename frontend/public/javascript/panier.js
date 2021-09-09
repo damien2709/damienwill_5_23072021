@@ -1,6 +1,5 @@
 // Je traduit l'objet JSON du localStorage en javascript
 let productsPanier= JSON.parse(localStorage.getItem("panier"));
-//verif : console.table(productsPanier); 
 
 //Déclaration des variables pour introduction de contenu
 const montantTotal = document.getElementById("montantTotal"); 
@@ -33,7 +32,7 @@ else{
     for(let i in productsPanier){
         let priceAdjust = calculPrix(productsPanier[i].price); // je remets dans le bon format le prix du produit
         var total = (totalProduit(priceAdjust, productsPanier[i].quantite)).toFixed(2); //je calcule le montant total d'une catégorie d'article
-        totalMontants.push(total).toFixed(2); // je pousse les totaux de chaque catégorie dans un tableau de calcul de commande, dans leur version nombre (sinon ça va devenir des strings)
+        totalMontants.push(total).toFixed(2); // je pousse les totaux de chaque catégorie dans un tableau de calcul de commande, dans leur version nombre
         //j'affiche mes information et je créé un bouton "supprimer l'article" auquel j'attribue un id qui correspond à l'ID de l'article
         produitsPanier.innerHTML += `
             <div class="col-12 col-md-6 col-lg-4 card">

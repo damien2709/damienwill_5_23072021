@@ -19,7 +19,7 @@ function supprimArticle (article, panier) {
     window.location.reload();
     }
 
-// FONCTION d'alerte panier vide : ja'ffiche un avertissement de panier vide et je désactive le bouton de formulaire si le panier est vide
+// FONCTION d'alerte panier vide : j'affiche un avertissement de panier vide et je désactive le bouton de formulaire si le panier est vide
 function panierVide() {
         document.getElementById("produitsPanier").innerHTML += `
         <div class="row" style=" margin: 10px; padding: 10px 0">

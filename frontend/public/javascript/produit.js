@@ -28,7 +28,6 @@ class camera {
 //je récupère l'article qui a été sélectionné pour l'afficher sur la page grace à la récupération des paramètres enregistrés dans l'URL
 const url = new URL(location.href) ;
 const articleId = url.searchParams.get("id");
-console.log(articleId.value);
 
 loadConfig()
     .then(data => {
@@ -36,7 +35,6 @@ loadConfig()
         fetch(config.host + "/api/cameras/" + articleId)
         .then(response => {
             if(response.ok){
-              // vérif : console.log("Réponse de l'API = OK"); //vérification de la bonne communication avec API
               return response.json();
             }
             else {
@@ -45,7 +43,6 @@ loadConfig()
             } 
         })
         .then(article => {
-            //verif : console.table(article);
             //je traduis le prix brut à 6 chiffres en euros avec deux décimales grace à la fonction calculPrix
             let priceAdjust = calculPrix(article.price);
             //J'affiche les informations du produit sur la page

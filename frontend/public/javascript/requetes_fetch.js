@@ -5,7 +5,6 @@ function requetePost(panierFinal){
         fetch(config.host + "/api/cameras/order", 
         {
             method: 'POST',
-            // ici on crée 2 entêtes (accept et content-type)qui vont prévenir le service web qu’il va recevoir du json
             headers: {
                 'Accept': 'application/json', 
                 'Content-Type': 'application/json' 

@@ -1,16 +1,10 @@
-//variables regex : une regex débute avec "/^" et finit avec "$/". La regex fonctionne pour 1 caractère, il faut ajouter le + pour filtrer une suite de caractères. 
+//variables regex 
     let regexLettres = /^[a-zA-Z-\s]+$/;
-        //test  : if (regexLettres.test("dam27") == false){console.log("regexLettres = OK");}
-        //else {console.log("regexLettres = NOT");}
-    let regexLettresChiffres = /^[a-zA-Z-\s0-9]+$/;
-        //test regex : if (regexLettresChiffres.test("123 dam") == true){console.log("regexLettresChiffres = OK");}
-        //else {console.log("regexLettresChiffres = NOT");}
+    let regexLettresChiffres = /^[a-zA-Z-\s0-9]+$/;  
     let regexEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-        //test regex : if (regexEmail.test("dam27@com" && "dam27.com") == false){console.log("regexEmail = OK");}
-        //else {console.log("regexEmail = NOT");}
 
 function validationFormulaire() {
-// Je met en place l'invalidité de champs requis vides. La méthode trim() permet de retirer les blancs en début et fin de chaîne.
+// Je met en place l'invalidité de champs requis vides. 
             // Champ Prénom
             if (firstName.value.trim() == "") {
                 errorPrenom.innerHTML = `Merci de remplir le champ "Prénom"`;
@@ -18,7 +12,7 @@ function validationFormulaire() {
                 errorPrenom.style.color= "red";
                 event.preventDefault();
             }
-                // je teste avec la méthode "test" de ma regex pour les lettres la valeur de l'élément (champ input) "prenom". La méthode renvoit "true" ou "false".
+                // je teste avec la méthode "test" de ma regex pour les lettres la valeur de l'élément (champ input) "prenom". 
             else if (regexLettres.test(firstName.value) == false){
                 errorPrenom.innerHTML = `Le champ "Prénom" peut contenir uniquement des lettres et des tirets`;
                 firstName.style.border= "1px solid red";
@@ -56,7 +50,7 @@ function validationFormulaire() {
                 errorAddress.style.color= "red";
                 event.preventDefault();
             }
-                    // je teste avec la méthode "test" de ma regex pour les lettres la valeur de l'élément (champ input) "prenom". La méthode renvoit "true" ou "false".
+                   
             else if (regexLettresChiffres.test(address.value) == false){
                 errorAddress.innerHTML = `Le champ "Adresse" peut contenir uniquement des lettres, des chiffres et des tirets`;
                 address.style.border= "1px solid red";
@@ -115,7 +109,6 @@ function validationFormulaire() {
                     city: city.value,
                     email: email.value
                 };
-                //verif : alert(contact.lastName);
                 // je crée un tableau qui comprend uniquement les ID des produits du panier
                 const products = [];
                     for (let i in productsPanier){
@@ -127,7 +120,6 @@ function validationFormulaire() {
                     contact: contact,
                     products: products
                 };
-                //verif : localStorage.setItem("order", JSON.stringify(panierFinal));
                 //envoi de la requête POST avec expoitation réponse de l'API externe pour afficher la confirmation de commande
                 requetePost(panierFinal);
             }
