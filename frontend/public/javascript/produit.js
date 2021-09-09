@@ -57,16 +57,45 @@ loadConfig()
             for(let i in article.lenses){
                 selectOption.innerHTML += `<option value="${article.lenses[i]}" id="choixOption">${article.lenses[i]}</option>`
             };
-        })
-        .catch(function(err) {
-            console.log("err")
-        })
+            //paramétrage de l'évenement click du bouton d'ajout au panier
+            lienPanier.addEventListener("click", function(event) {
+                // Si aucune option n'est sélectionnée, message d'erreur et desactivation du bouton d'envoi
+                if(selectOption.selectedIndex == 0){
+                    error.innerHTML = `Merci de choisir une option !`;
+                    error.style.color = `red`;
+                    confirmationCommande.innerHTML= ``;
+                    event.preventDefault;  
+                }
+                // Si l'option est sélectionnée, on enlève le mesage d'erreur mais on garde la désactivation du bouton
+                if(selectOption.selectedIndex != 0){
+                    error.innerHTML = ``;
+                    error.style.color = `initial`;
+                    event.preventDefault;
+                }
+                if(selectQuantite.selectedIndex == 0){
+                    error1.innerHTML = `Merci de choisir une quantité !`;
+                    error1.style.color = `red`;
+                    confirmationCommande.innerHTML= ``;
+                    event.preventDefault;  
+                }
+            
+                if(selectQuantite.selectedIndex != 0){
+                    error1.innerHTML = ``;
+                    error1.style.color = `initial`;
+                    event.preventDefault;
+                }
+                //si a (les options) et b (la quantité) ne sont pas à 0, alors je crée un nouvel objet "articleEnregistre" de la classe "camera", j'appelle la fonction ajoutPanier avec argument "articleEnregistre". L'article sera ensuite stocké dans le tableau "panier", ce tableau sera créé ou mis à jour puis envoyé dans le local storage. Ensuite j'afficherais un message de confirmation de commande.
+                if(selectOption.selectedIndex != 0 && selectQuantite.selectedIndex != 0){
+                    const articleEnregistre = new camera(article.name, article.imageUrl, selectOption.value, article.price, article._id, selectQuantite.value);
+                    ajoutPanier(articleEnregistre);
+                    confirmationCommande.innerHTML= `Votre produit a été ajouté au panier !`;
+                    confirmationCommande.style.color = "green";  
+                }
+                        })
+                    })
     })
     .catch(function(err) {
         console.log("err")
         });
 
-//paramétrage de l'évenement click du bouton d'ajout au panier
-lienPanier.addEventListener("click", function(event) {
-    validationAjoutArticlePanier(selectOption.selectedIndex, selectQuantite.selectedIndex);
-})
+
