@@ -13,8 +13,8 @@ function ajoutPanier(produit) {
 };   
  
 //FONCTION de suppression d'un produit dans le panier : paramétrage du bouton "supprimer l'article" avec 2 paramètres : l'article et le tableau représentant le panier
-function supprimArticle (article, panier) {
-    productsPanier.splice(article, 1);
+function supprimArticle (indexArticle, panier) {
+    productsPanier.splice(indexArticle, 1);
     localStorage.setItem("panier", JSON.stringify(panier));
     window.location.reload();
     }

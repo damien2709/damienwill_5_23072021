@@ -47,22 +47,25 @@ else{
                     <p class="card-text">Option : <strong>${productsPanier[i].optionChoisie}</strong></p>
                     <p class="card-text">Quantité : <strong>${productsPanier[i].quantite}</strong></p>
                     <p class="card-text">Total : <strong>${total} euros TTC</strong></p>
-                    <button class="btn btn-danger" id="${productsPanier[i].id}">Supprimer l'article</button>
+                    <button class="btn btn-danger supprim" id="${productsPanier[i].id}" data-id="${productsPanier[i].id}">Supprimer l'article</button>
                 </div>
             </div>
-            `;  
-    }
+            `; 
+        } 
 };
 
-// je paramètre le bouton "supprimer" pour chaque article avec la condition suivante : supprime du panier l'article dont l'ID correspond à l'ID du bouton et actualise le panier. 
-for(let i in productsPanier){
-    let boutonProduit = document.getElementById(productsPanier[i].id);
-    boutonProduit.addEventListener("click", function() {
-        if(boutonProduit.id == productsPanier[i].id ){
-            supprimArticle(productsPanier[i], productsPanier)
-        }
-})
-};  
+// PARAMETRAGE DU BOUTON SUPPRIMER : je sélectionne tous les boutons qui ont la classe "supprim". J'obtient une Nodelist. Je la traite avec la méthode forEach(). Pour chaque élément de ma liste (name), j'écoute l'événement "click" : pour chaque élément du panier, si la data-id du bouton itéré est égale à l'id de l'article itéré, alors j'appelle la fonction "supprimArticle" qui va splicer l'élément du panier grace à 2 arguments : l'index de l'élément/article, le tableau conteneur.  
+let boutonProduit = document.querySelectorAll('button.supprim');
+    //verif : console.table(boutonProduit);
+    boutonProduit.forEach(function(name, index){
+        //verif : console.table(name.dataset.id);
+        name.addEventListener("click", function() {
+            for(i in productsPanier){
+                if(name.dataset.id === productsPanier[i].id){
+                    supprimArticle(productsPanier.indexOf(productsPanier[i]), productsPanier);
+            }}
+        })
+});
 
     // je calcule, j'enregistre le  montant total dans le web storage et j'affiche le montant total de la commande 
 calculMontantCommande();

@@ -1,6 +1,6 @@
 //fonction de traduction du prix en euros avec 2 nombres derrière la virgule
 function calculPrix(a){
-    return (a/1000).toFixed(2);
+    return (a/100).toFixed(2);
 }; 
 
  //fonction calcul du cout d'une commande d'1 article
